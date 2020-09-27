@@ -65,10 +65,8 @@ echo '\nexport NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nv
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >>  ~/.zshrc
 
 source ~/.zshrc
-nvm --version
 nvm install --lts
-node --version
-npm --version
+nvm current
 
 echo 'installing theme'
 sudo apt-get install dconf-cli
