@@ -99,7 +99,7 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 
-echo 'installing aws-cli' 
+echo 'installing aws-cli'
 sudo apt-get install awscli -y
 aws --version
 curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o "session-manager-plugin.deb"
@@ -117,13 +117,27 @@ sudo dpkg -i mongodb-compass_1.22.1_amd64.deb
 sudo apt-get install -f
 
 echo 'installing Insomnia'
-echo "deb https://dl.bintray.com/getinsomnia/Insomnia /" \
+echo "deb [trusted=yes arch=amd64] https://download.konghq.com/insomnia-ubuntu/ default all" \
     | sudo tee -a /etc/apt/sources.list.d/insomnia.list
-wget --quiet -O - https://insomnia.rest/keys/debian-public.key.asc \
-    | sudo apt-key add -
-sudo apt-get update && sudo apt-get install insomnia
+sudo apt-get update
+sudo apt-get install insomnia
 
 echo 'installing Yarn'
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-sudo apt update && sudo apt install --no-install-recommends yarn
+npm install --global yarn
+
+echo '----c# programs related-----'
+
+echo 'installing mono' 
+sudo apt install gnupg ca-certificates
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+echo "deb https://download.mono-project.com/repo/ubuntu stable-focal main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
+sudo apt update
+sudo apt install mono-devel
+
+echo 'installing .NET 5' 
+wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+sudo apt update
+sudo dpkg -i packages-microsoft-prod.deb
+sudo apt-get install -y apt-transport-https
+sudo apt-get update
+sudo apt-get install -y dotnet-sdk-5.0
